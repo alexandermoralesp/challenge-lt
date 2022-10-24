@@ -6,7 +6,7 @@
 ## Backend Tasks
 > **Note:** Adding tests are not required but it is a plus if you can do it.
 - [x] Verify that booking requests is not made in the past
-- [ ] Implement tests for the booking endpoint as you see fit
+- [x] Implement tests for the booking endpoint as you see fit
 
 ## Frontend Tasks
 - [x] Don't let the user book a date in the past
