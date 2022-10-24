@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    image: challenge_django
+    container_name: challenge_django
+    volumes:
+      - ./:/code
+    ports:
+      - 8000:8000
+    env_file: ./backend/.env
+
+    environment:
+      - ENVIRONMENT=dockerized
+      - DB_HOST=postgres
+  app:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+    command: npm start
+  web:
+    build:
+      context: ./frontend
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+  postgres:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=reto
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres_data: {}
