@@ -19,36 +19,20 @@ export default function App() {
     useState<boolean>(false);
   // Alter after submit booking
   const [submit, setSubmit] = useState<number>(0);
+  
   const [bookings, setBookings] = useState<Booking[]>([
-    {
-      date: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      id: 1,
-      buyer: "A",
-      provider: "B",
-      details: "C",
-      duration: 12,
-    },
-    {
-      date: new Date(),
-      created_at: new Date(),
-      updated_at: new Date(),
-      id: 1,
-      buyer: "A",
-      provider: "B",
-      details: "C",
-      duration: 12,
-    }
   ]);
+  
   const useNewBookingForm = useForm<BookingResponse>({
     defaultValues: { date: new Date().toISOString() },
   });
+  
   const removeBooking = async (idx: any) => {
     const nbooking = [...bookings];
     nbooking.splice(idx, 1);
     setBookings(nbooking);
   }
+  
   const createNewBooking = async () => {
     const data = useNewBookingForm.getValues();
     const [res, err] = await asyncWrapper(BookingsService.createBooking(data));
@@ -69,6 +53,7 @@ export default function App() {
     }
     useNewBookingForm.reset();
   };
+  
   const fetchBookings = async () => {
     const [res, err] = await asyncWrapper<BookingResponse[], AxiosError>(
       BookingsService.getBookings()
